@@ -9,10 +9,14 @@ readme = "README.md"
 requires-python = ">=3.12, <4"
 dependencies = [
     "djangorestframework (>=3.15.2,<4.0.0)",
-    "django-environ (>=0.12.0,<0.13.0)"
+    "django-environ (>=0.12.0,<0.13.0)",
 ]
 
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+psycopg = {extras = ["binary"], version = "^3.2.4"}
+
