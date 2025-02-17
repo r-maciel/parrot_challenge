@@ -6,7 +6,7 @@ from api.serializers.waiter_serializer import WaiterSerializer
 from api.permissions import IsSuperUser
 
 
-class WaiterDetailView(APIView):
+class WaiterView(APIView):
     """ Manage waiter instances """
     permission_classes = [IsAuthenticated, IsSuperUser]
 

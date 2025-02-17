@@ -5,7 +5,7 @@ from rest_framework import status
 from api.models.waiter import Waiter
 
 
-class WaiterDetailViewTest(TestCase):
+class TestWaiterView(TestCase):
     """ Test cases for the WaiterDetailView """
 
     def setUp(self):
