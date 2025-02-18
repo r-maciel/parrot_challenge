@@ -46,13 +46,24 @@ class OrderSerializer(serializers.ModelSerializer):
         order = Order.objects.create(**order_data)
 
         products_data = self.clean_products_data(validated_data["order_products"])
-        products_to_create = [Product(name=name, price=data["price"])
-                              for name, data in products_data.items()]
-        Product.objects.bulk_create(products_to_create, ignore_conflicts=True)
+        self.create_products_in_bulk(products_data)
+        products = self.recover_all_order_products(products_data)
+        self.create_order_products_in_bulk(order, products, products_data)
 
+        return Order.objects.prefetch_related(
+            "order_products__product"
+        ).get(id=order.id)
+
+    def recover_all_order_products(self, products_data):
+        """
+        Recover all the products for the order, those who were created,
+        and those who were already in the DB
+        """
         product_names = products_data.keys()
-        products = Product.objects.filter(name__in=product_names)
+        return Product.objects.filter(name__in=product_names)
 
+    def create_order_products_in_bulk(self, order, products, products_data):
+        """ Create order-products in bulk """
         order_products = [
             OrderProduct(
                 product=product,
@@ -64,9 +75,11 @@ class OrderSerializer(serializers.ModelSerializer):
         ]
         OrderProduct.objects.bulk_create(order_products)
 
-        return Order.objects.prefetch_related(
-            "order_products__product"
-        ).get(id=order.id)
+    def create_products_in_bulk(self, products_data):
+        """ Create products in bulk """
+        products_to_create = [Product(name=name, price=data["price"])
+                              for name, data in products_data.items()]
+        Product.objects.bulk_create(products_to_create, ignore_conflicts=True)
 
     def get_waiter_from_request(self):
         """ Get waiter from request context """

@@ -1,22 +1,17 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from api.serializers.order_serializer import OrderSerializer
+from api.models.order import Order
 
 
-class OrderView(APIView):
+class OrderView(ListCreateAPIView):
     """ View to create orders """
     permission_classes = [IsAuthenticated, IsAdminUser]
+    queryset = Order.objects.prefetch_related("order_products__product")
+    serializer_class = OrderSerializer
 
-    def post(self, request):
-        """Handles order creation."""
-        serializer = OrderSerializer(
-            data=request.data, context={"request": request}
-        )
-
-        if serializer.is_valid():
-            order = serializer.save()
-            return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_serializer_context(self):
+        """ Pass context to serializer """
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
