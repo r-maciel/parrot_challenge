@@ -12,6 +12,8 @@ Para hacer el despliegue de manera local del proyecto y no tener que realizar ni
 docker-compose --env-file .env.local -f docker-compose.local.yml up --build -d
 ```
 
+La ruta de la api es http://127.0.0.1:8000/api/
+
 Por defecto ya viene un superusuario generado
 
 ```
