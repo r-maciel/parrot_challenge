@@ -42,7 +42,6 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """ Override create method for custom creation """
-        print(validated_data)
         order_data = self.get_order_data(validated_data)
         order = Order.objects.create(**order_data)
 
