@@ -9,7 +9,7 @@ Está desarrollado con:
 ## Desplegar en local el proyecto
 Para hacer el despliegue de manera local del proyecto y no tener que realizar ninguna instalción, es necesrio Docker, si se tiene Docker instalado basta con ejecutar el siguiente comando en la ruta principal del proyecto
 ```
-docker-compose -f docker-compose.local.yml up -d
+docker-compose --env-file .env.local -f docker-compose.local.yml up --build -d
 ```
 
 Por defecto ya viene un superusuario generado
