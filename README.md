@@ -142,3 +142,9 @@ Retorna el reporte de productos vendidos en un archivo excel. Los query paramete
 
 ### `GET` `/api/orders/`
 Retorna las ordenes paginadas de 20 en 20, solo los usuarios Auténticados (Waiter y Admin) pueden verlas. Requiere JWT
+
+
+## Para probar
+Si tienes postman, puedes descargar esta colección que ya tiene los endpoints declarados
+[POSTMAN COLLECTION](https://luis-maciel.postman.co/workspace/Postman-API-Fundamentals-Studen~1f75330f-9725-4578-ab5e-b9ae4ca872af/request/40258957-c946cb6e-0af2-44cb-a531-fd633bc42ce5?action=share&creator=40258957&ctx=documentation)
+
